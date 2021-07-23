@@ -9,7 +9,6 @@ const PokemonRow = ( { pokemon, onSelect }) => (
           <td><button onClick={() => onSelect(pokemon)}>Select!</button></td>
           </tr>
 );
-
 PokemonRow.propTypes = {
   pokemon: PropTypes.shape({
   name: PropTypes.shape({
@@ -18,6 +17,23 @@ PokemonRow.propTypes = {
   type: PropTypes.arrayOf(PropTypes.string)}),
   onSelect: PropTypes.func,
 }
+
+const PokemonInfo = ({ name, base}) => (
+  <div>
+    <h1>{name.english}</h1>
+    <table>
+      {
+        Object.keys(base).map(key => (
+          <tr key={key}>
+            <td>{key}</td>
+            <td>{base[key]}</td>
+
+          </tr>
+        ))
+      }
+    </table>
+  </div>
+)
 
 
 function App() {
@@ -50,7 +66,7 @@ function App() {
         </tr>
         </thead>
         <tbody>
-          
+        
           {pokemon
           .filter((pokemon) => pokemon.name.english.toLowerCase().includes(filter.toLowerCase()))
           .slice(0,20).map(pokemon => (
@@ -60,11 +76,7 @@ function App() {
         </tbody>
       </table>
       </div>
-       {selectedItem && (
-         <div>
-           <h1>{selectedItem.name.english}</h1>
-       </div>
-       )}       
+       {selectedItem && <PokemonInfo {... selectedItem}/>   }  
       </div>
     </div>
   );
